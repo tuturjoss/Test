@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>À propos — Gward Conciergerie</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-brand">Gward<span class="accent-dot">.</span></div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Accueil</a></li>
+      <li><a href="about.html" class="nav-link active">À propos</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <div class="word-reveal" style="margin-bottom:20px;">
+        <span class="word" style="font-size:clamp(2.5rem,7vw,5rem);">À</span>
+        <span class="word accent" style="font-size:clamp(2.5rem,7vw,5rem);">Propos</span>
+      </div>
+      <p class="subtitle">Votre partenaire de confiance au quotidien</p>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="about-intro">
+    <div class="section-title"><span>Notre histoire</span></div>
+    <p>
+      Fondée avec une passion pour l'excellence et le service personnalisé,
+      <strong>Gward Conciergerie</strong> accompagne particuliers et professionnels
+      dans la gestion de leur quotidien. Nous croyons que chaque détail compte,
+      et que le vrai luxe, c'est du temps libéré pour ce qui compte vraiment.
+    </p>
+  </section>
+
+  <!-- Values -->
+  <section class="values-section">
+    <div class="section-title"><span>Nos valeurs</span></div>
+    <div class="values-grid">
+      <div class="value-card" data-delay="0">
+        <span class="value-icon">✦</span>
+        <h3>Excellence</h3>
+        <p>Chaque prestation est réalisée avec le plus grand soin, sans compromis sur la qualité.</p>
+      </div>
+      <div class="value-card" data-delay="120">
+        <span class="value-icon">◈</span>
+        <h3>Discrétion</h3>
+        <p>La confidentialité de nos clients est une priorité absolue. Votre vie privée est sacrée.</p>
+      </div>
+      <div class="value-card" data-delay="240">
+        <span class="value-icon">⟳</span>
+        <h3>Réactivité</h3>
+        <p>Disponibles 7j/7, nous répondons à vos besoins en moins de 2 heures.</p>
+      </div>
+      <div class="value-card" data-delay="360">
+        <span class="value-icon">◇</span>
+        <h3>Sur-mesure</h3>
+        <p>Chaque client est unique. Nos services s'adaptent à vos habitudes et préférences.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="team-section">
+    <div class="section-title"><span>Notre équipe</span></div>
+    <div class="team-grid">
+      <div class="team-card" data-delay="0">
+        <div class="team-avatar">G</div>
+        <h3>Guillaume Renard</h3>
+        <div class="role">Fondateur & Directeur</div>
+        <p>Ancien directeur hôtelier, Guillaume a fondé Gward avec la conviction que le service haut de gamme doit être accessible à tous.</p>
+      </div>
+      <div class="team-card" data-delay="150">
+        <div class="team-avatar">S</div>
+        <h3>Sophie Marchand</h3>
+        <div class="role">Responsable Clientèle</div>
+        <p>Avec 10 ans d'expérience en relation client de luxe, Sophie orchestre chaque mission avec précision et bienveillance.</p>
+      </div>
+      <div class="team-card" data-delay="300">
+        <div class="team-avatar">A</div>
+        <h3>Adrien Lefort</h3>
+        <div class="role">Coordinateur Opérations</div>
+        <p>Expert en logistique, Adrien s'assure que chaque prestation se déroule parfaitement, dans les délais impartis.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Counter strip (réutilisé) -->
+  <section id="counters">
+    <div class="counter-item">
+      <span class="count" data-target="350">0</span>
+      <label>Clients satisfaits</label>
+    </div>
+    <div class="counter-item">
+      <span class="count" data-target="7">0</span>
+      <label>Jours / semaine</label>
+    </div>
+    <div class="counter-item">
+      <span class="count" data-target="98">0</span>
+      <label>% de satisfaction</label>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-text">Gward Conciergerie &copy; 2026</div>
+    <div class="footer-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    // Nav toggle
+    document.querySelector('.nav-toggle').addEventListener('click', function() {
+      document.querySelector('.nav-links').classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

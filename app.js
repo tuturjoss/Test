@@ -96,7 +96,7 @@ window.addEventListener('load', () => {
     });
   }, { threshold: 0.15 });
 
-  document.querySelectorAll('.card, .tl-item').forEach(el => observer.observe(el));
+  document.querySelectorAll('.card, .tl-item, .value-card, .team-card').forEach(el => observer.observe(el));
 })();
 
 // ─── Animated Counters ────────────────────────────────────────────────────────

@@ -3,10 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Motion Design</title>
+  <title>Gward Conciergerie</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-brand">Gward<span class="accent-dot">.</span></div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link active">Accueil</a></li>
+      <li><a href="about.html" class="nav-link">À propos</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 
   <!-- Intro Loader -->
   <div id="loader">
@@ -17,7 +30,7 @@
   </div>
 
   <!-- Hero Section -->
-  <section id="hero">
+  <section id="hero" style="padding-top:70px;">
     <canvas id="particles-canvas"></canvas>
 
     <div class="hero-content">
@@ -138,5 +151,10 @@
   </footer>
 
   <script src="app.js"></script>
+  <script>
+    document.querySelector('.nav-toggle').addEventListener('click', function() {
+      document.querySelector('.nav-links').classList.toggle('open');
+    });
+  </script>
 </body>
 </html>
