@@ -1,12 +1,15 @@
 import React from 'react';
 import {
   AbsoluteFill,
+  Img,
   interpolate,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
-import { BG, GOLD, GOLD_LIGHT, WHITE, GRAY } from '../constants';
+import { BG, GOLD, WHITE, GRAY } from '../constants';
+import { FONT_TITLE, FONT_BODY } from '../fonts';
 
 export const Intro: React.FC = () => {
   const frame = useCurrentFrame();
@@ -30,7 +33,7 @@ export const Intro: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        background: `radial-gradient(ellipse at center, #1a1208 0%, ${BG} 70%)`,
+        background: `radial-gradient(ellipse at center, #232D5A 0%, ${BG} 70%)`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -62,73 +65,27 @@ export const Intro: React.FC = () => {
         opacity: logoOpacity,
       }} />
 
-      {/* Logo monogram */}
+      {/* Logo image */}
       <div
         style={{
           opacity: logoOpacity,
           transform: `scale(${logoScale})`,
           marginBottom: 30,
-        }}
-      >
-        <div style={{
-          width: 110,
-          height: 110,
-          border: `2px solid ${GOLD}`,
-          borderRadius: 4,
+          borderRadius: 12,
+          overflow: 'hidden',
+          width: 220,
+          height: 220,
+          background: WHITE,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: `${GOLD}15`,
-          position: 'relative',
-        }}>
-          <span style={{
-            fontSize: 52,
-            fontWeight: 700,
-            color: GOLD,
-            fontFamily: 'Georgia, serif',
-            letterSpacing: -2,
-          }}>G</span>
-          <div style={{
-            position: 'absolute',
-            bottom: -6,
-            right: -6,
-            width: 12,
-            height: 12,
-            background: GOLD,
-            borderRadius: 2,
-          }} />
-        </div>
-      </div>
-
-      {/* Company name */}
-      <div style={{
-        opacity: titleOpacity,
-        transform: `translateY(${titleY}px)`,
-        textAlign: 'center',
-      }}>
-        <h1 style={{
-          margin: 0,
-          fontSize: 58,
-          fontWeight: 300,
-          color: WHITE,
-          fontFamily: 'Georgia, serif',
-          letterSpacing: 8,
-          textTransform: 'uppercase',
-        }}>
-          GWARD
-        </h1>
-        <h2 style={{
-          margin: 0,
-          fontSize: 22,
-          fontWeight: 400,
-          color: GOLD,
-          fontFamily: 'Georgia, serif',
-          letterSpacing: 14,
-          textTransform: 'uppercase',
-          marginTop: 4,
-        }}>
-          CONCIERGERIE
-        </h2>
+          boxShadow: `0 0 40px ${GOLD}33`,
+        }}
+      >
+        <Img
+          src={staticFile('image.png')}
+          style={{ width: '90%', height: '90%', objectFit: 'contain' }}
+        />
       </div>
 
       {/* Gold separator line */}
@@ -136,7 +93,7 @@ export const Intro: React.FC = () => {
         width: lineWidth,
         height: 1,
         background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`,
-        marginTop: 24,
+        marginTop: 8,
         marginBottom: 24,
       }} />
 
@@ -148,7 +105,7 @@ export const Intro: React.FC = () => {
         fontSize: 18,
         fontWeight: 300,
         color: GRAY,
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: FONT_BODY,
         letterSpacing: 3,
         textTransform: 'uppercase',
       }}>
@@ -162,7 +119,7 @@ export const Intro: React.FC = () => {
         marginTop: 16,
         fontSize: 14,
         color: `${GOLD}99`,
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: FONT_BODY,
         letterSpacing: 2,
       }}>
         gward-conciergerie.fr

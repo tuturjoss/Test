@@ -6,7 +6,8 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
-import { BG, BG_CARD, GOLD, WHITE, GRAY, GRAY_LIGHT } from '../constants';
+import { BG, BG_CARD, GOLD, WHITE, GRAY } from '../constants';
+import { FONT_TITLE, FONT_BODY } from '../fonts';
 
 const SERVICES = [
   { icon: '📋', label: 'Gestion des annonces', desc: 'Airbnb, Booking, VRBO' },
@@ -46,7 +47,7 @@ const ServiceCard: React.FC<{
       position: 'relative',
       overflow: 'hidden',
     }}>
-      {/* Top gold accent */}
+      {/* Top orange accent */}
       <div style={{
         position: 'absolute',
         top: 0, left: 0, right: 0,
@@ -58,13 +59,13 @@ const ServiceCard: React.FC<{
         fontSize: 16,
         fontWeight: 600,
         color: WHITE,
-        fontFamily: 'Georgia, serif',
+        fontFamily: FONT_TITLE,
         lineHeight: 1.3,
       }}>{service.label}</div>
       <div style={{
         fontSize: 13,
         color: GRAY,
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: FONT_BODY,
       }}>{service.desc}</div>
     </div>
   );
@@ -99,7 +100,7 @@ export const Services: React.FC = () => {
           color: GOLD,
           letterSpacing: 5,
           textTransform: 'uppercase',
-          fontFamily: 'Arial, sans-serif',
+          fontFamily: FONT_BODY,
           opacity: titleOpacity,
         }}>
           Nos prestations
@@ -107,9 +108,9 @@ export const Services: React.FC = () => {
         <h2 style={{
           margin: '10px 0 0',
           fontSize: 44,
-          fontWeight: 300,
+          fontWeight: 400,
           color: WHITE,
-          fontFamily: 'Georgia, serif',
+          fontFamily: FONT_TITLE,
           letterSpacing: 2,
           opacity: titleOpacity,
           transform: `translateY(${titleY}px)`,

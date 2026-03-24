@@ -6,13 +6,14 @@ import {
   spring,
   useVideoConfig,
 } from 'remotion';
-import { BG, GOLD, GOLD_LIGHT, WHITE, GRAY, BG_CARD } from '../constants';
+import { BG, GOLD, WHITE, GRAY, BG_CARD } from '../constants';
+import { FONT_TITLE, FONT_BODY } from '../fonts';
 
 const STATS = [
-  { value: 150, suffix: '+', label: 'Logements gérés', icon: '🏠' },
-  { value: 98,  suffix: '%', label: 'Taux de satisfaction', icon: '⭐' },
-  { value: 500, suffix: '+', label: 'Voyageurs / an', icon: '✈️' },
-  { value: 24,  suffix: '/7', label: 'Disponibilité', icon: '📞' },
+  { prefix: '+', value: 20, suffix: '', label: 'Propriétaires nous font confiance', icon: '🏠' },
+  { prefix: '+', value: 30, suffix: '%', label: 'Revenus en plus', icon: '📈' },
+  { prefix: '',  value: 98, suffix: '%', label: 'Taux de satisfaction', icon: '⭐' },
+  { prefix: '',  value: 24, suffix: '/7', label: 'Disponibilité', icon: '📞' },
 ];
 
 const StatBlock: React.FC<{
@@ -30,7 +31,6 @@ const StatBlock: React.FC<{
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
 
-  // Animated counter
   const progress = interpolate(frame, [delay + 10, delay + 70], [0, 1], {
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
     easing: (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
@@ -52,7 +52,7 @@ const StatBlock: React.FC<{
       position: 'relative',
       overflow: 'hidden',
     }}>
-      {/* Bottom gold glow */}
+      {/* Bottom orange glow */}
       <div style={{
         position: 'absolute',
         bottom: 0, left: 0, right: 0,
@@ -66,20 +66,21 @@ const StatBlock: React.FC<{
         fontSize: 64,
         fontWeight: 700,
         color: GOLD,
-        fontFamily: 'Georgia, serif',
+        fontFamily: FONT_TITLE,
         lineHeight: 1,
         letterSpacing: -2,
       }}>
-        {displayValue}{stat.suffix}
+        {stat.prefix}{displayValue}{stat.suffix}
       </div>
 
       <div style={{
         marginTop: 12,
         fontSize: 14,
         color: GRAY,
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: FONT_BODY,
         letterSpacing: 1,
         textTransform: 'uppercase',
+        lineHeight: 1.4,
       }}>
         {stat.label}
       </div>
@@ -99,7 +100,7 @@ export const Stats: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        background: `radial-gradient(ellipse at center, #110d04 0%, ${BG} 65%)`,
+        background: `radial-gradient(ellipse at center, #232D5A 0%, ${BG} 65%)`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -115,15 +116,15 @@ export const Stats: React.FC = () => {
           color: GOLD,
           letterSpacing: 5,
           textTransform: 'uppercase',
-          fontFamily: 'Arial, sans-serif',
+          fontFamily: FONT_BODY,
           opacity: titleOpacity,
         }}>Notre bilan</p>
         <h2 style={{
           margin: '10px 0 0',
           fontSize: 44,
-          fontWeight: 300,
+          fontWeight: 400,
           color: WHITE,
-          fontFamily: 'Georgia, serif',
+          fontFamily: FONT_TITLE,
           letterSpacing: 2,
           opacity: titleOpacity,
           transform: `translateY(${titleY}px)`,

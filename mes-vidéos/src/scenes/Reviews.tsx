@@ -7,6 +7,7 @@ import {
   useVideoConfig,
 } from 'remotion';
 import { BG, BG_CARD, GOLD, WHITE, GRAY, GRAY_LIGHT } from '../constants';
+import { FONT_TITLE, FONT_BODY } from '../fonts';
 
 const REVIEWS = [
   {
@@ -69,7 +70,7 @@ const ReviewCard: React.FC<{
         right: 20,
         fontSize: 60,
         color: `${GOLD}22`,
-        fontFamily: 'Georgia, serif',
+        fontFamily: FONT_TITLE,
         lineHeight: 1,
       }}>"</div>
 
@@ -79,7 +80,7 @@ const ReviewCard: React.FC<{
         margin: '0 0 20px',
         fontSize: 14,
         color: GRAY_LIGHT,
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: FONT_BODY,
         lineHeight: 1.8,
         fontStyle: 'italic',
       }}>
@@ -103,13 +104,13 @@ const ReviewCard: React.FC<{
           justifyContent: 'center',
           fontSize: 16,
           color: GOLD,
-          fontFamily: 'Georgia, serif',
+          fontFamily: FONT_TITLE,
           fontWeight: 700,
         }}>
           {review.author[0]}
         </div>
         <div>
-          <div style={{ fontSize: 14, color: WHITE, fontFamily: 'Arial, sans-serif', fontWeight: 600 }}>
+          <div style={{ fontSize: 14, color: WHITE, fontFamily: FONT_BODY, fontWeight: 600 }}>
             {review.author}
           </div>
           <div style={{ fontSize: 12, color: GRAY, fontFamily: 'Arial, sans-serif' }}>
@@ -151,7 +152,7 @@ export const Reviews: React.FC = () => {
           color: GOLD,
           letterSpacing: 5,
           textTransform: 'uppercase',
-          fontFamily: 'Arial, sans-serif',
+          fontFamily: FONT_BODY,
           opacity: titleOpacity,
         }}>Ils nous font confiance</p>
         <h2 style={{
@@ -159,7 +160,7 @@ export const Reviews: React.FC = () => {
           fontSize: 44,
           fontWeight: 300,
           color: WHITE,
-          fontFamily: 'Georgia, serif',
+          fontFamily: FONT_TITLE,
           letterSpacing: 2,
           opacity: titleOpacity,
           transform: `translateY(${titleY}px)`,
@@ -184,7 +185,7 @@ export const Reviews: React.FC = () => {
           {[...Array(5)].map((_, i) => (
             <span key={i} style={{ color: GOLD, fontSize: 20 }}>★</span>
           ))}
-          <span style={{ color: GRAY, fontSize: 14, fontFamily: 'Arial, sans-serif', marginLeft: 8 }}>
+          <span style={{ color: GRAY, fontSize: 14, fontFamily: FONT_BODY, marginLeft: 8 }}>
             5.0 · Note moyenne Google
           </span>
         </div>

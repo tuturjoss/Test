@@ -1,10 +1,10 @@
-export const GOLD = '#C9A84C';
-export const GOLD_LIGHT = '#E8C96A';
-export const BG = '#080808';
-export const BG_CARD = '#141414';
+export const GOLD = '#DB651B';
+export const GOLD_LIGHT = '#E8873A';
+export const BG = '#181F3D';
+export const BG_CARD = '#1E2647';
 export const WHITE = '#FFFFFF';
-export const GRAY = '#999999';
-export const GRAY_LIGHT = '#CCCCCC';
+export const GRAY = '#9BA8C8';
+export const GRAY_LIGHT = '#C8D0E4';
 
 export const FPS = 30;
 

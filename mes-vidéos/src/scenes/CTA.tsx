@@ -1,12 +1,15 @@
 import React from 'react';
 import {
   AbsoluteFill,
+  Img,
   interpolate,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
-import { BG, GOLD, GOLD_LIGHT, WHITE, GRAY } from '../constants';
+import { BG, GOLD, WHITE, GRAY } from '../constants';
+import { FONT_TITLE, FONT_BODY } from '../fonts';
 
 export const CTA: React.FC = () => {
   const frame = useCurrentFrame();
@@ -35,7 +38,7 @@ export const CTA: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        background: `radial-gradient(ellipse at center, #1c1508 0%, #050505 70%)`,
+        background: `radial-gradient(ellipse at center, #232D5A 0%, ${BG} 70%)`,
         opacity: bgOpacity,
         display: 'flex',
         flexDirection: 'column',
@@ -85,7 +88,7 @@ export const CTA: React.FC = () => {
           fontSize: 72,
           fontWeight: 300,
           color: WHITE,
-          fontFamily: 'Georgia, serif',
+          fontFamily: FONT_TITLE,
           letterSpacing: 2,
         }}>Louez</span>
 
@@ -95,7 +98,7 @@ export const CTA: React.FC = () => {
           fontSize: 72,
           fontWeight: 700,
           color: GOLD,
-          fontFamily: 'Georgia, serif',
+          fontFamily: FONT_TITLE,
           fontStyle: 'italic',
           letterSpacing: 2,
         }}>mieux,</span>
@@ -113,7 +116,7 @@ export const CTA: React.FC = () => {
           fontSize: 72,
           fontWeight: 300,
           color: WHITE,
-          fontFamily: 'Georgia, serif',
+          fontFamily: FONT_TITLE,
           letterSpacing: 2,
         }}>louez</span>
 
@@ -123,7 +126,7 @@ export const CTA: React.FC = () => {
           fontSize: 72,
           fontWeight: 700,
           color: GOLD,
-          fontFamily: 'Georgia, serif',
+          fontFamily: FONT_TITLE,
           fontStyle: 'italic',
           letterSpacing: 2,
         }}>plus.</span>
@@ -143,7 +146,7 @@ export const CTA: React.FC = () => {
         margin: 0,
         fontSize: 18,
         color: GRAY,
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: FONT_BODY,
         letterSpacing: 4,
         textTransform: 'uppercase',
         marginBottom: 36,
@@ -151,7 +154,7 @@ export const CTA: React.FC = () => {
         Confiez-nous votre bien dès aujourd'hui
       </p>
 
-      {/* CTA button style */}
+      {/* CTA button */}
       <div style={{
         opacity: btnOpacity,
         transform: `scale(${btnScale})`,
@@ -160,7 +163,7 @@ export const CTA: React.FC = () => {
         borderRadius: 4,
         color: GOLD,
         fontSize: 16,
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: FONT_BODY,
         letterSpacing: 3,
         textTransform: 'uppercase',
         background: `${GOLD}15`,
@@ -171,27 +174,26 @@ export const CTA: React.FC = () => {
       {/* Logo */}
       <div style={{
         position: 'absolute',
-        bottom: 40,
+        bottom: 32,
         display: 'flex',
         alignItems: 'center',
         gap: 12,
         opacity: logoOpacity,
       }}>
         <div style={{
-          width: 36,
-          height: 36,
-          border: `1px solid ${GOLD}`,
-          borderRadius: 3,
+          width: 72,
+          height: 72,
+          borderRadius: 8,
+          overflow: 'hidden',
+          background: WHITE,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: `${GOLD}15`,
         }}>
-          <span style={{ fontSize: 18, fontWeight: 700, color: GOLD, fontFamily: 'Georgia, serif' }}>G</span>
-        </div>
-        <div>
-          <div style={{ fontSize: 13, color: WHITE, fontFamily: 'Georgia, serif', letterSpacing: 3 }}>GWARD</div>
-          <div style={{ fontSize: 9, color: GOLD, fontFamily: 'Arial, sans-serif', letterSpacing: 4 }}>CONCIERGERIE</div>
+          <Img
+            src={staticFile('image.png')}
+            style={{ width: '90%', height: '90%', objectFit: 'contain' }}
+          />
         </div>
       </div>
     </AbsoluteFill>
