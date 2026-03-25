@@ -8,14 +8,21 @@ export const GRAY_LIGHT = '#C8D0E4';
 
 export const FPS = 30;
 
-// Scene timings (frames) — vidéo ~45 secondes
-export const SCENE = {
-  intro:    { start: 0,   duration: 180 },
-  services: { start: 180, duration: 330 },
-  domain:   { start: 510, duration: 180 },
-  stats:    { start: 690, duration: 210 },
-  reviews:  { start: 900, duration: 240 },
-  cta:      { start: 1140, duration: 210 },
+// Scene durations in frames
+export const SCENE_DURATIONS = {
+  intro:    6  * 30, // 180
+  services: 10 * 30, // 300
+  domain:   6  * 30, // 180
+  stats:    6  * 30, // 180
+  reviews:  7  * 30, // 210
+  cta:      7  * 30, // 210
 };
 
-export const TOTAL_FRAMES = 1350; // 45 secondes
+// Fade transition duration between scenes (frames)
+export const FADE = 20;
+
+// Total frames = sum of scenes - (n-1) × FADE
+export const TOTAL_FRAMES =
+  Object.values(SCENE_DURATIONS).reduce((a, b) => a + b, 0) -
+  (Object.keys(SCENE_DURATIONS).length - 1) * FADE;
+// = 1260 - 100 = 1160 frames ≈ 38.7 seconds

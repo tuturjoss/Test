@@ -1,86 +1,76 @@
 import React from 'react';
 import {
   AbsoluteFill,
+  Easing,
   interpolate,
-  useCurrentFrame,
   spring,
+  useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
 import { BG, GOLD, WHITE, GRAY, BG_CARD } from '../constants';
 import { FONT_TITLE, FONT_BODY } from '../fonts';
 
 const STATS = [
-  { prefix: '+', value: 20, suffix: '', label: 'Propriétaires nous font confiance', icon: '🏠' },
-  { prefix: '+', value: 30, suffix: '%', label: 'Revenus en plus', icon: '📈' },
-  { prefix: '',  value: 98, suffix: '%', label: 'Taux de satisfaction', icon: '⭐' },
-  { prefix: '',  value: 24, suffix: '/7', label: 'Disponibilité', icon: '📞' },
+  { prefix: '+', value: 20, suffix: '',   label: 'Propriétaires\nnous font confiance', icon: '🏠' },
+  { prefix: '+', value: 30, suffix: '%',  label: 'Revenus\nen plus',                  icon: '📈' },
+  { prefix: '',  value: 98, suffix: '%',  label: 'Taux de\nsatisfaction',             icon: '⭐' },
+  { prefix: '',  value: 24, suffix: '/7', label: 'Disponibilité\ngarantie',           icon: '📞' },
 ];
 
-const StatBlock: React.FC<{
-  stat: (typeof STATS)[0];
-  index: number;
-}> = ({ stat, index }) => {
+const StatBlock: React.FC<{ stat: (typeof STATS)[0]; index: number }> = ({ stat, index }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const delay = 30 + index * 20;
 
-  const blockOpacity = interpolate(frame, [delay, delay + 20], [0, 1], {
+  const delay = 1.2 * fps + index * 0.4 * fps;
+  const blockSpring = spring({ frame, fps, config: { damping: 200 }, delay, durationInFrames: 1.5 * fps });
+  const opacity = interpolate(frame - delay, [0, 0.6 * fps], [0, 1], {
+    easing: Easing.out(Easing.quad),
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
   });
-  const blockY = interpolate(frame, [delay, delay + 25], [30, 0], {
-    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-  });
 
-  const progress = interpolate(frame, [delay + 10, delay + 70], [0, 1], {
+  // Counter animation — cubic easing per skill
+  const progress = interpolate(frame, [delay + 0.3 * fps, delay + 2.5 * fps], [0, 1], {
+    easing: Easing.inOut(Easing.quad),
     extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-    easing: (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
   });
   const displayValue = Math.round(stat.value * progress);
 
   return (
     <div style={{
-      opacity: blockOpacity,
-      transform: `translateY(${blockY}px)`,
+      opacity,
+      transform: `translateY(${interpolate(blockSpring, [0, 1], [40, 0])})`,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       textAlign: 'center',
-      padding: '40px 30px',
-      border: `1px solid ${GOLD}33`,
-      borderRadius: 8,
+      padding: '44px 24px',
+      border: `1px solid ${GOLD}30`,
+      borderRadius: 12,
       background: BG_CARD,
       position: 'relative',
       overflow: 'hidden',
+      flex: 1,
     }}>
-      {/* Bottom orange glow */}
+      {/* Top glow bar */}
       <div style={{
-        position: 'absolute',
-        bottom: 0, left: 0, right: 0,
-        height: 3,
+        position: 'absolute', top: 0, left: 0, right: 0, height: 3,
         background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`,
       }} />
-
-      <span style={{ fontSize: 36, marginBottom: 12 }}>{stat.icon}</span>
-
+      {/* Bottom glow */}
       <div style={{
-        fontSize: 64,
-        fontWeight: 700,
-        color: GOLD,
-        fontFamily: FONT_TITLE,
-        lineHeight: 1,
-        letterSpacing: -2,
-      }}>
+        position: 'absolute', bottom: 0, left: '20%', right: '20%', height: 1,
+        background: `${GOLD}40`,
+        boxShadow: `0 0 20px 2px ${GOLD}30`,
+      }} />
+
+      <div style={{ fontSize: 70, fontWeight: 700, color: GOLD, fontFamily: FONT_TITLE, lineHeight: 1, letterSpacing: -2 }}>
         {stat.prefix}{displayValue}{stat.suffix}
       </div>
 
       <div style={{
-        marginTop: 12,
-        fontSize: 14,
-        color: GRAY,
-        fontFamily: FONT_BODY,
-        letterSpacing: 1,
-        textTransform: 'uppercase',
-        lineHeight: 1.4,
+        marginTop: 16, fontSize: 14, color: GRAY, fontFamily: FONT_BODY,
+        letterSpacing: 1, textTransform: 'uppercase', lineHeight: 1.6,
+        whiteSpace: 'pre-line',
       }}>
         {stat.label}
       </div>
@@ -90,65 +80,45 @@ const StatBlock: React.FC<{
 
 export const Stats: React.FC = () => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
 
-  const titleOpacity = interpolate(frame, [0, 35], [0, 1], { extrapolateRight: 'clamp' });
-  const titleY = interpolate(frame, [0, 40], [25, 0], { extrapolateRight: 'clamp' });
-  const lineW = interpolate(frame, [25, 65], [0, 200], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-
-  const fadeOut = interpolate(frame, [185, 210], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const titleOpacity = interpolate(frame, [0, 0.8 * fps], [0, 1], {
+    easing: Easing.out(Easing.quad), extrapolateRight: 'clamp',
+  });
+  const titleY = interpolate(frame, [0, 1 * fps], [25, 0], {
+    easing: Easing.out(Easing.quad), extrapolateRight: 'clamp',
+  });
+  const lineW = interpolate(frame, [0.5 * fps, 1.5 * fps], [0, 200], {
+    easing: Easing.inOut(Easing.quad), extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+  });
 
   return (
-    <AbsoluteFill
-      style={{
-        background: `radial-gradient(ellipse at 50% 40%, #232D5A 0%, ${BG} 65%)`,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '60px 100px',
-        opacity: fadeOut,
-      }}
-    >
-      <div style={{ textAlign: 'center', marginBottom: 60 }}>
+    <AbsoluteFill style={{
+      background: `radial-gradient(ellipse at 50% 35%, #232D5A 0%, ${BG} 65%)`,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '60px 100px',
+    }}>
+      <div style={{ textAlign: 'center', marginBottom: 70, opacity: titleOpacity, transform: `translateY(${titleY}px)` }}>
         <p style={{
-          margin: 0,
-          fontSize: 12,
-          color: GOLD,
-          letterSpacing: 5,
-          textTransform: 'uppercase',
-          fontFamily: FONT_BODY,
-          opacity: titleOpacity,
+          margin: 0, fontSize: 13, color: GOLD, letterSpacing: 6,
+          textTransform: 'uppercase', fontFamily: FONT_BODY,
         }}>Notre bilan</p>
         <h2 style={{
-          margin: '10px 0 0',
-          fontSize: 44,
-          fontWeight: 400,
-          color: WHITE,
-          fontFamily: FONT_TITLE,
-          letterSpacing: 2,
-          opacity: titleOpacity,
-          transform: `translateY(${titleY}px)`,
+          margin: '14px 0 0', fontSize: 52, fontWeight: 400, color: WHITE, fontFamily: FONT_TITLE,
         }}>
           Nos <em style={{ color: GOLD, fontStyle: 'italic' }}>Chiffres</em>
         </h2>
         <div style={{
-          width: lineW,
-          height: 1,
+          width: lineW, height: 1, margin: '20px auto 0',
           background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`,
-          margin: '16px auto 0',
         }} />
       </div>
 
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: 24,
-        width: '100%',
-        maxWidth: 1400,
-      }}>
-        {STATS.map((stat, i) => (
-          <StatBlock key={i} stat={stat} index={i} />
-        ))}
+      <div style={{ display: 'flex', gap: 28, width: '100%', maxWidth: 1500 }}>
+        {STATS.map((stat, i) => <StatBlock key={i} stat={stat} index={i} />)}
       </div>
     </AbsoluteFill>
   );

@@ -1,6 +1,9 @@
 import React from 'react';
-import { AbsoluteFill, Sequence } from 'remotion';
-import { SCENE, TOTAL_FRAMES } from './constants';
+import { AbsoluteFill } from 'remotion';
+import { TransitionSeries, linearTiming } from '@remotion/transitions';
+import { fade } from '@remotion/transitions/fade';
+import { slide } from '@remotion/transitions/slide';
+import { SCENE_DURATIONS, FADE, BG } from './constants';
 import { Intro } from './scenes/Intro';
 import { Services } from './scenes/Services';
 import { Domain } from './scenes/Domain';
@@ -8,32 +11,53 @@ import { Stats } from './scenes/Stats';
 import { Reviews } from './scenes/Reviews';
 import { CTA } from './scenes/CTA';
 
+const TRANS_FADE = linearTiming({ durationInFrames: FADE });
+const TRANS_SLIDE = linearTiming({ durationInFrames: FADE });
+
 export const GwardVideo: React.FC = () => {
   return (
-    <AbsoluteFill style={{ background: '#181F3D' }}>
-      <Sequence from={SCENE.intro.start} durationInFrames={SCENE.intro.duration}>
-        <Intro />
-      </Sequence>
+    <AbsoluteFill style={{ background: BG }}>
+      <TransitionSeries>
+        <TransitionSeries.Sequence durationInFrames={SCENE_DURATIONS.intro}>
+          <Intro />
+        </TransitionSeries.Sequence>
 
-      <Sequence from={SCENE.services.start} durationInFrames={SCENE.services.duration}>
-        <Services />
-      </Sequence>
+        <TransitionSeries.Transition presentation={fade()} timing={TRANS_FADE} />
 
-      <Sequence from={SCENE.domain.start} durationInFrames={SCENE.domain.duration}>
-        <Domain />
-      </Sequence>
+        <TransitionSeries.Sequence durationInFrames={SCENE_DURATIONS.services}>
+          <Services />
+        </TransitionSeries.Sequence>
 
-      <Sequence from={SCENE.stats.start} durationInFrames={SCENE.stats.duration}>
-        <Stats />
-      </Sequence>
+        <TransitionSeries.Transition
+          presentation={slide({ direction: 'from-right' })}
+          timing={TRANS_SLIDE}
+        />
 
-      <Sequence from={SCENE.reviews.start} durationInFrames={SCENE.reviews.duration}>
-        <Reviews />
-      </Sequence>
+        <TransitionSeries.Sequence durationInFrames={SCENE_DURATIONS.domain}>
+          <Domain />
+        </TransitionSeries.Sequence>
 
-      <Sequence from={SCENE.cta.start} durationInFrames={SCENE.cta.duration}>
-        <CTA />
-      </Sequence>
+        <TransitionSeries.Transition presentation={fade()} timing={TRANS_FADE} />
+
+        <TransitionSeries.Sequence durationInFrames={SCENE_DURATIONS.stats}>
+          <Stats />
+        </TransitionSeries.Sequence>
+
+        <TransitionSeries.Transition
+          presentation={slide({ direction: 'from-right' })}
+          timing={TRANS_SLIDE}
+        />
+
+        <TransitionSeries.Sequence durationInFrames={SCENE_DURATIONS.reviews}>
+          <Reviews />
+        </TransitionSeries.Sequence>
+
+        <TransitionSeries.Transition presentation={fade()} timing={TRANS_FADE} />
+
+        <TransitionSeries.Sequence durationInFrames={SCENE_DURATIONS.cta}>
+          <CTA />
+        </TransitionSeries.Sequence>
+      </TransitionSeries>
     </AbsoluteFill>
   );
 };
