@@ -91,16 +91,16 @@ const StatBlock: React.FC<{
 export const Stats: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const titleOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: 'clamp' });
-  const titleY = interpolate(frame, [0, 25], [20, 0], { extrapolateRight: 'clamp' });
-  const lineW = interpolate(frame, [15, 40], [0, 160], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const titleOpacity = interpolate(frame, [0, 35], [0, 1], { extrapolateRight: 'clamp' });
+  const titleY = interpolate(frame, [0, 40], [25, 0], { extrapolateRight: 'clamp' });
+  const lineW = interpolate(frame, [25, 65], [0, 200], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
-  const fadeOut = interpolate(frame, [130, 150], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const fadeOut = interpolate(frame, [185, 210], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
   return (
     <AbsoluteFill
       style={{
-        background: `radial-gradient(ellipse at center, #232D5A 0%, ${BG} 65%)`,
+        background: `radial-gradient(ellipse at 50% 40%, #232D5A 0%, ${BG} 65%)`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

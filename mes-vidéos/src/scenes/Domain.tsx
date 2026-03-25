@@ -9,96 +9,105 @@ import {
 import { BG, GOLD, WHITE, GRAY, GRAY_LIGHT } from '../constants';
 import { FONT_TITLE, FONT_BODY } from '../fonts';
 
-const ZONES = [
-  'Vannes & Centre-ville',
-  'Golfe du Morbihan',
-  "Presqu'île de Rhuys",
-  'Île aux Moines',
-  'Baden & Arradon',
-];
-
-// Stylized SVG map of Golfe du Morbihan
+// Stylized SVG map of Golfe du Morbihan — standalone, larger
 const MorbihanMap: React.FC<{ frame: number }> = ({ frame }) => {
-  const pin1 = interpolate(frame, [50, 65], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const pin2 = interpolate(frame, [60, 75], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const pin3 = interpolate(frame, [70, 85], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const pin1 = interpolate(frame, [60, 80], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const pin2 = interpolate(frame, [75, 95], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const pin3 = interpolate(frame, [90, 110], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const pin4 = interpolate(frame, [105, 125], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+
+  const pulse = Math.sin(frame * 0.12) * 0.3 + 0.7;
 
   return (
-    <svg viewBox="0 0 420 380" width="420" height="380" style={{ display: 'block' }}>
+    <svg viewBox="0 0 780 560" width="780" height="560" style={{ display: 'block' }}>
       {/* Background sea */}
-      <rect width="420" height="380" fill="#1A2748" rx="12" />
+      <rect width="780" height="560" fill="#16244A" rx="16" />
 
-      {/* Land - main coastline simplified */}
-      <path
-        d="M 0 80 L 60 70 L 90 50 L 130 40 L 170 55 L 200 45 L 240 55 L 280 48 L 320 60 L 360 55 L 420 65 L 420 0 L 0 0 Z"
-        fill="#243260"
-      />
-      {/* Land - south shore */}
-      <path
-        d="M 0 380 L 0 280 L 30 270 L 70 285 L 100 265 L 130 275 L 160 260 L 200 270 L 230 260 L 260 270 L 290 255 L 330 265 L 370 255 L 420 265 L 420 380 Z"
-        fill="#243260"
-      />
-      {/* Gulf water area */}
-      <ellipse cx="210" cy="190" rx="140" ry="110" fill="#1E3A7A" opacity="0.7" />
+      {/* Subtle grid */}
+      {[1, 2, 3, 4, 5, 6].map((i) => (
+        <line key={`h${i}`} x1="0" y1={i * 80} x2="780" y2={i * 80} stroke="#ffffff08" strokeWidth="1" />
+      ))}
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
+        <line key={`v${i}`} x1={i * 78} y1="0" x2={i * 78} y2="560" stroke="#ffffff08" strokeWidth="1" />
+      ))}
 
-      {/* Gulf coastline detail */}
-      <path
-        d="M 90 150 Q 120 120 160 130 Q 195 115 230 125 Q 270 120 305 145 Q 330 165 335 195 Q 330 230 305 250 Q 270 270 235 265 Q 200 275 170 265 Q 135 255 110 235 Q 80 210 90 150 Z"
-        fill="#192D5E"
-        stroke="#2A4490"
-        strokeWidth="1.5"
-      />
+      {/* Northern land (top) */}
+      <path d="M 0 90 Q 80 70 160 80 Q 220 65 280 75 Q 340 60 400 72 Q 460 58 520 68 Q 580 55 640 70 Q 700 60 780 75 L 780 0 L 0 0 Z" fill="#1F3060" />
 
-      {/* Islands in the gulf */}
-      <ellipse cx="200" cy="195" rx="18" ry="12" fill="#243260" />
-      <ellipse cx="245" cy="220" rx="12" ry="8" fill="#243260" />
-      <ellipse cx="175" cy="215" rx="10" ry="7" fill="#243260" />
+      {/* Southern land */}
+      <path d="M 0 560 L 0 420 Q 60 410 120 425 Q 170 415 220 430 Q 270 415 330 425 Q 390 410 450 430 Q 510 415 570 428 Q 630 413 700 428 Q 740 420 780 430 L 780 560 Z" fill="#1F3060" />
 
-      {/* Gulf opening (west) */}
+      {/* Gulf of Morbihan — the inland sea */}
+      <ellipse cx="390" cy="295" rx="240" ry="165" fill="#1A3575" />
+
+      {/* Gulf coastline (detailed inner shore) */}
       <path
-        d="M 75 175 Q 82 195 75 215"
-        stroke="#1E3A7A"
-        strokeWidth="8"
-        fill="none"
+        d="M 175 230 Q 210 195 265 205 Q 310 190 360 198 Q 415 185 465 200 Q 510 188 555 210 Q 590 230 600 265 Q 610 300 595 335 Q 575 370 540 385 Q 500 400 455 395 Q 410 405 365 398 Q 315 408 270 395 Q 225 380 200 350 Q 175 315 175 280 Z"
+        fill="#142D68"
+        stroke="#2A4898"
+        strokeWidth="2"
       />
 
-      {/* Roads / grid lines subtle */}
-      <line x1="200" y1="60" x2="200" y2="140" stroke="#2A3870" strokeWidth="1" opacity="0.5" />
-      <line x1="200" y1="140" x2="200" y2="125" stroke={GOLD} strokeWidth="1.5" opacity="0.4" />
+      {/* Île aux Moines */}
+      <ellipse cx="370" cy="300" rx="28" ry="18" fill="#1F3060" />
+      {/* Île d'Arz */}
+      <ellipse cx="440" cy="330" rx="22" ry="13" fill="#1F3060" />
+      {/* Smaller islands */}
+      <ellipse cx="310" cy="320" rx="14" ry="9" fill="#1F3060" />
+      <ellipse cx="480" cy="270" rx="12" ry="8" fill="#1F3060" />
 
-      {/* Pin: Vannes */}
-      <g opacity={pin1} transform="translate(200, 125)">
-        <circle cx="0" cy="0" r="10" fill={GOLD} opacity="0.2" />
-        <circle cx="0" cy="0" r="6" fill={GOLD} />
-        <circle cx="0" cy="0" r="18" fill="none" stroke={GOLD} strokeWidth="1" opacity="0.4" />
-        <text x="14" y="4" fill={WHITE} fontSize="11" fontFamily="Arial" fontWeight="600">Vannes</text>
+      {/* Gulf opening (west passage) */}
+      <rect x="140" y="260" width="38" height="70" fill="#16244A" />
+
+      {/* Road from Vannes south */}
+      <line x1="390" y1="120" x2="390" y2="200" stroke="#2A4090" strokeWidth="3" opacity="0.5" />
+
+      {/* ---- Animated pins ---- */}
+
+      {/* Pin: Vannes (north shore) */}
+      <g opacity={pin1}>
+        <circle cx="390" cy="175" r={20 * pulse} fill={GOLD} opacity="0.18" />
+        <circle cx="390" cy="175" r="9" fill={GOLD} />
+        <circle cx="390" cy="175" r="4" fill="#fff" />
+        {/* Label */}
+        <rect x="404" y="162" width="72" height="24" rx="4" fill={GOLD} opacity="0.9" />
+        <text x="440" y="178" textAnchor="middle" fill="#fff" fontSize="12" fontFamily="Arial" fontWeight="700">Vannes</text>
       </g>
 
       {/* Pin: Île aux Moines */}
-      <g opacity={pin2} transform="translate(200, 195)">
-        <circle cx="0" cy="0" r="5" fill={GOLD} opacity="0.8" />
-        <text x="10" y="4" fill={GRAY_LIGHT} fontSize="9" fontFamily="Arial">Île aux Moines</text>
+      <g opacity={pin2}>
+        <circle cx="370" cy="300" r="6" fill={GOLD} opacity="0.9" />
+        <circle cx="370" cy="300" r="2.5" fill="#fff" />
+        <text x="385" y="304" fill={GRAY_LIGHT} fontSize="11" fontFamily="Arial">Île aux Moines</text>
       </g>
 
       {/* Pin: Presqu'île de Rhuys */}
-      <g opacity={pin3} transform="translate(280, 255)">
-        <circle cx="0" cy="0" r="5" fill={GOLD} opacity="0.8" />
-        <text x="8" y="-5" fill={GRAY_LIGHT} fontSize="9" fontFamily="Arial">Rhuys</text>
+      <g opacity={pin3}>
+        <circle cx="480" cy="398" r="6" fill={GOLD} opacity="0.9" />
+        <circle cx="480" cy="398" r="2.5" fill="#fff" />
+        <text x="495" y="402" fill={GRAY_LIGHT} fontSize="11" fontFamily="Arial">Presqu'île de Rhuys</text>
       </g>
 
-      {/* Label */}
-      <text x="210" y="360" textAnchor="middle" fill={GOLD} fontSize="10" fontFamily="Arial" letterSpacing="3" opacity="0.8">
-        GOLFE DU MORBIHAN
+      {/* Pin: Baden / Arradon (west shore) */}
+      <g opacity={pin4}>
+        <circle cx="230" cy="265" r="6" fill={GOLD} opacity="0.9" />
+        <circle cx="230" cy="265" r="2.5" fill="#fff" />
+        <text x="245" y="269" fill={GRAY_LIGHT} fontSize="11" fontFamily="Arial">Baden · Arradon</text>
+      </g>
+
+      {/* Label overlay */}
+      <text x="390" y="538" textAnchor="middle" fill={GOLD} fontSize="13" fontFamily="Arial" letterSpacing="4" opacity="0.7">
+        GOLFE DU MORBIHAN · BRETAGNE
       </text>
 
-      {/* North indicator */}
-      <g transform="translate(390, 30)">
-        <text x="0" y="0" textAnchor="middle" fill={GOLD} fontSize="10" fontFamily="Arial" opacity="0.6">N</text>
-        <line x1="0" y1="4" x2="0" y2="14" stroke={GOLD} strokeWidth="1" opacity="0.6" />
+      {/* North arrow */}
+      <g transform="translate(740, 40)">
+        <circle cx="0" cy="0" r="16" fill="#ffffff10" stroke={GOLD} strokeWidth="0.8" opacity="0.6" />
+        <text x="0" y="5" textAnchor="middle" fill={GOLD} fontSize="12" fontFamily="Arial" fontWeight="700" opacity="0.8">N</text>
       </g>
 
       {/* Border */}
-      <rect width="420" height="380" fill="none" stroke={GOLD} strokeWidth="1.5" strokeOpacity="0.35" rx="12" />
+      <rect width="780" height="560" fill="none" stroke={GOLD} strokeWidth="1.5" strokeOpacity="0.3" rx="16" />
     </svg>
   );
 };
@@ -107,116 +116,61 @@ export const Domain: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const titleOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: 'clamp' });
-  const titleX = interpolate(frame, [0, 25], [-40, 0], { extrapolateRight: 'clamp' });
+  const titleOpacity = interpolate(frame, [0, 30], [0, 1], { extrapolateRight: 'clamp' });
+  const titleY = interpolate(frame, [0, 35], [20, 0], { extrapolateRight: 'clamp' });
+  const lineW = interpolate(frame, [20, 55], [0, 220], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
-  const lineW = interpolate(frame, [15, 45], [0, 180], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const mapScale = spring({ frame, fps, config: { damping: 24, stiffness: 70 }, delay: 25 });
+  const mapOpacity = interpolate(frame, [25, 55], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
-  const mapScale = spring({ frame, fps, config: { damping: 22, stiffness: 80 }, delay: 20 });
-  const mapOpacity = interpolate(frame, [20, 40], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-
-  const fadeOut = interpolate(frame, [100, 120], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const fadeOut = interpolate(frame, [155, 180], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
   return (
     <AbsoluteFill
       style={{
-        background: `linear-gradient(135deg, #1E2A55 0%, ${BG} 100%)`,
+        background: `linear-gradient(160deg, #1E2A55 0%, ${BG} 100%)`,
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '80px 120px',
-        gap: 100,
+        padding: '50px 80px',
+        gap: 40,
         opacity: fadeOut,
       }}
     >
-      {/* Left: Text content */}
-      <div style={{ flex: 1 }}>
+      {/* Title */}
+      <div style={{ textAlign: 'center', opacity: titleOpacity, transform: `translateY(${titleY}px)` }}>
         <p style={{
           margin: 0,
-          fontSize: 12,
+          fontSize: 13,
           color: GOLD,
-          letterSpacing: 5,
+          letterSpacing: 6,
           textTransform: 'uppercase',
           fontFamily: FONT_BODY,
-          opacity: titleOpacity,
-        }}>Notre présence</p>
-
+        }}>Zone d'intervention</p>
         <h2 style={{
-          margin: '12px 0 0',
-          fontSize: 48,
+          margin: '10px 0 4px',
+          fontSize: 52,
           fontWeight: 400,
           color: WHITE,
           fontFamily: FONT_TITLE,
-          letterSpacing: 1,
-          opacity: titleOpacity,
-          transform: `translateX(${titleX}px)`,
         }}>
-          Zone <em style={{ color: GOLD, fontStyle: 'italic' }}>d'Intervention</em>
+          Vannes &amp; <em style={{ color: GOLD, fontStyle: 'italic' }}>Golfe du Morbihan</em>
         </h2>
-
         <div style={{
           width: lineW,
           height: 1,
-          background: `linear-gradient(90deg, ${GOLD}, transparent)`,
-          margin: '20px 0',
+          background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`,
+          margin: '16px auto 0',
         }} />
-
-        <p style={{
-          margin: '0 0 30px',
-          fontSize: 16,
-          color: GRAY,
-          fontFamily: FONT_BODY,
-          lineHeight: 1.7,
-          opacity: titleOpacity,
-        }}>
-          Nous gérons votre bien à Vannes<br />
-          et dans tout le Golfe du Morbihan,<br />
-          l'une des plus belles destinations de Bretagne.
-        </p>
-
-        {/* Zones list */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          {ZONES.map((zone, i) => {
-            const zoneOpacity = interpolate(frame, [40 + i * 12, 55 + i * 12], [0, 1], {
-              extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-            });
-            const zoneX = interpolate(frame, [40 + i * 12, 60 + i * 12], [-20, 0], {
-              extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
-            });
-            return (
-              <div key={i} style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 12,
-                opacity: zoneOpacity,
-                transform: `translateX(${zoneX}px)`,
-              }}>
-                <div style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: '50%',
-                  background: GOLD,
-                  flexShrink: 0,
-                }} />
-                <span style={{
-                  fontSize: 15,
-                  color: GRAY_LIGHT,
-                  fontFamily: FONT_BODY,
-                }}>{zone}</span>
-              </div>
-            );
-          })}
-        </div>
       </div>
 
-      {/* Right: SVG Map */}
+      {/* Map — centered, large */}
       <div style={{
         opacity: mapOpacity,
         transform: `scale(${mapScale})`,
-        flexShrink: 0,
-        boxShadow: `0 0 40px ${GOLD}22`,
-        borderRadius: 12,
+        boxShadow: `0 0 60px ${GOLD}22`,
+        borderRadius: 16,
         overflow: 'hidden',
       }}>
         <MorbihanMap frame={frame} />

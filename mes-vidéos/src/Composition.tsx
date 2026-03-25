@@ -10,7 +10,7 @@ import { CTA } from './scenes/CTA';
 
 export const GwardVideo: React.FC = () => {
   return (
-    <AbsoluteFill style={{ background: '#080808' }}>
+    <AbsoluteFill style={{ background: '#181F3D' }}>
       <Sequence from={SCENE.intro.start} durationInFrames={SCENE.intro.duration}>
         <Intro />
       </Sequence>
